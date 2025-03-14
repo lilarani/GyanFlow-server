@@ -1,5 +1,7 @@
 import  User  from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import getToken from "../utils/tokenGenaratuon.js";
+
 
 
 let userRegister = async (req, res) => {
@@ -18,7 +20,14 @@ let userRegister = async (req, res) => {
         })
         await myUser.save()
 
+        const token = getToken(email);
+        res.cookie('token', token ,{
+            httpOnly : true ,
+            
+        })
+
         res.status(200).send({
+            tokenCapture : true ,
             success: true,
             data: {
                 name,
@@ -47,7 +56,13 @@ const loginUser = async (req, res) => {
                 message: 'incorrect information'
             })
         }
+        const token = getToken(email);
+        res.cookie('token', token ,{
+            httpOnly : true ,
+            
+        })
         res.status(200).send({
+            tokenCapture : true ,
             success: true,
             data: {
                 name: user.name,
