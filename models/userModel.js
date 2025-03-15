@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     password : {type : String , required : true},
     role : {type : String , required : true, default : 'student'},
     picture : {type : String ,required : true, default : ""},
-    bio : {type : String , required : true, default : ""}
+    bio : {type : String , default : ""}
 },{timestamps : true})
 
 const User = mongoose.model("User" , userSchema);
