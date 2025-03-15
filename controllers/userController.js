@@ -1,9 +1,12 @@
-import  User  from "../models/userModel.js";
+import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import getToken from "../utils/tokenGenaratuon.js";
+
 
 
 let userRegister = async (req, res) => {
     try {
+        console.log(req.body)
         let { name, email, phone, password, role, picture, bio } = req.body;
         let user = await User.findOne({ email });
         if (user) {
@@ -18,7 +21,14 @@ let userRegister = async (req, res) => {
         })
         await myUser.save()
 
+        const token = getToken(email);
+        res.cookie('token', token, {
+            httpOnly: true,
+
+        })
+
         res.status(200).send({
+            tokenCapture: true,
             success: true,
             data: {
                 name,
@@ -47,7 +57,14 @@ const loginUser = async (req, res) => {
                 message: 'incorrect information'
             })
         }
+        const token = getToken(email);
+        res.cookie('token', token, {
+            httpOnly: true,
+
+        })
+        console.log("login token ", token)
         res.status(200).send({
+            tokenCapture: true,
             success: true,
             data: {
                 name: user.name,
@@ -56,12 +73,21 @@ const loginUser = async (req, res) => {
                 role: user.role
             }
         })
-    }catch(e){
+    } catch (e) {
         res.status(404).send({
-            success : false ,
-            message : "user can't login"
+            success: false,
+            message: "user can't login"
         })
     }
 }
 
-export {userRegister , loginUser};
+
+let logoutUser = async (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+    
+    });
+    res.status(200).send("Logged out successfully");
+}
+
+export { userRegister, loginUser, logoutUser };
