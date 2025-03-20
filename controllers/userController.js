@@ -26,7 +26,7 @@ let userRegister = async (req, res) => {
             httpOnly: true,
 
         })
-
+        console.log(token)
         res.status(200).send({
             tokenCapture: true,
             success: true,
@@ -80,14 +80,45 @@ const loginUser = async (req, res) => {
         })
     }
 }
-
+let userRole = async (req , res) =>{
+    let email = req.params.email ;
+    let user = await User.findOne({email});
+    if(!user){
+        return res.status(404).send({
+            success : false ,
+            message : "user not found"
+        })
+    }
+    res.status(200).send({
+        success : true ,
+        user 
+    })
+}
 
 let logoutUser = async (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
-    
+
     });
     res.status(200).send("Logged out successfully");
 }
 
-export { userRegister, loginUser, logoutUser };
+let ourAllUsers = async (req, res) => {
+    try {
+        let users = await User.find({});
+        res.status(200).send({
+            tokenCapture: true,
+            success: true,
+            data: users
+        })
+
+    } catch (e) {
+        console.log(e);
+        res.status(404).send({
+            success: false,
+            message: "users not found"
+        })
+    }
+}
+
+export { userRegister, loginUser, logoutUser , ourAllUsers  , userRole};
