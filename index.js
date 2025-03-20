@@ -13,7 +13,7 @@ app.use(
     credentials: true,
     origin: [
       'http://localhost:5173',
-      'http://localhost:5174',
+      'http://localhost:5175',
       'https://gyanflow-ca428.web.app',
       'https://gyanflow-ca428.firebaseapp.com',
     ],
