@@ -88,4 +88,7 @@ let logoutUser = async (req, res) => {
   res.status(200).send('Logged out successfully');
 };
 
-export { userRegister, loginUser, logoutUser };
+let ourAllUsers = async (req, res) => {};
+let userRole = async (req, res) => {};
+
+export { userRegister, loginUser, logoutUser, ourAllUsers, userRole };
