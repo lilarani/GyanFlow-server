@@ -4,7 +4,6 @@ import { userRegister, loginUser , logoutUser, ourAllUsers, userRole } from '../
 import setTooken from './../utils/setToken.js';
 import verifyToken from './../middlewares/verifytoken.js';
 import verifyAdmin from '../middlewares/verifyAdmin.js';
-import verifyTecher from '../middlewares/verifyTecher.js';
 
 const router = express.Router()
 
@@ -16,7 +15,7 @@ router.post('/googleLogin' , setTooken);
 
 router.get('/logout' , logoutUser);
 
-router.get('/users',verifyToken, verifyTecher  , ourAllUsers);
+router.get('/users',verifyToken , verifyAdmin  , ourAllUsers);
 
 router.get('/role/:email' , userRole)
 
