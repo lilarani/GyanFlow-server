@@ -82,6 +82,7 @@ const loginUser = async (req, res) => {
 }
 let userRole = async (req , res) =>{
     let email = req.params.email ;
+    console.log(email)
     let user = await User.findOne({email});
     if(!user){
         return res.status(404).send({
