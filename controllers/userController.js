@@ -81,26 +81,49 @@ const loginUser = async (req, res) => {
   }
 };
 
+let userRole = async (req, res) => {
+  try {
+    let email = req.params.email;
+    console.log(email);
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: 'user not found',
+      });
+    }
+
+    const token = getToken(email);
+    res.cookie('token', token, {
+      httpOnly: true,
+    });
+
+    console.log('login token ', token);
+    res.status(200).send({
+      tokenCapture: true,
+      success: true,
+      data: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      },
+    });
+  } catch (e) {
+    res.status(404).send({
+      success: false,
+      message: "user can't login",
+      error: e.message,
+    });
+  }
+};
+
 let logoutUser = async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
   });
   res.status(200).send('Logged out successfully');
-};
-
-let userRole = async (req, res) => {
-  let email = req.params.email;
-  let user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).send({
-      success: false,
-      message: 'user not found',
-    });
-  }
-  res.status(200).send({
-    success: true,
-    user,
-  });
 };
 
 let ourAllUsers = async (req, res) => {
@@ -120,4 +143,29 @@ let ourAllUsers = async (req, res) => {
   }
 };
 
-export { userRegister, loginUser, logoutUser, ourAllUsers, userRole };
+let deleteUser = async (req, res) => {
+  try {
+    let userEmail = req.params.email;
+    console.log(userEmail, 'delete user');
+    let query = { email: userEmail };
+    let result = await User.deleteOne(query);
+    res.status(200).send({
+      success: true,
+      message: 'delete successfull',
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export {
+  userRegister,
+  loginUser,
+  logoutUser,
+  ourAllUsers,
+  userRole,
+  deleteUser,
+};
