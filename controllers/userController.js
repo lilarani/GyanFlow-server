@@ -103,12 +103,7 @@ let userRole = async (req, res) => {
     res.status(200).send({
       tokenCapture: true,
       success: true,
-      data: {
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-      },
+      data: user,
     });
   } catch (e) {
     res.status(404).send({

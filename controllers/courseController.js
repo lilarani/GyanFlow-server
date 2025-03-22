@@ -20,6 +20,8 @@ let addCourse = async (req, res) => {
       rating,
       status,
     } = req.body;
+    console.log(req.body);
+    console.log("info comming")
     let newCourse = new Course({
       title,
       shortDescription,
@@ -40,7 +42,7 @@ let addCourse = async (req, res) => {
     });
 
     await newCourse.save();
-
+    console.log("course Add Done")
     res.status(200).send({
       success: true,
       data: req.body,

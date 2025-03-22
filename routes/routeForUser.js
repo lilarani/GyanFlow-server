@@ -25,7 +25,6 @@ router.get('/users', verifyToken, verifyAdmin, ourAllUsers);
 
 router.get('/role/:email', userRole);
 
-router.get('/role/:email', userRole);
 router.delete('/deleteUser/:email', deleteUser);
 
 export default router;

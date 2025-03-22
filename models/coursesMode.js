@@ -17,8 +17,6 @@ import mongoose from "mongoose";
     rating: Number,
     status: {
       type: String,
-      enum: ['active', 'inactive', 'draft'],
-      default: 'draft'
     }
 
 }, { timestamps: true });
