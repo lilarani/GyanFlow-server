@@ -8,7 +8,7 @@
     /gyanflow/user/googleLogin
     /gyanflow/user/logout
     /gyanflow/user/users
-    /gyanflow/user/deleteUser/:email'
+     http://localhost:4000/gyanflow/user/deleteUser/:email'
 
  course api end-points
 
