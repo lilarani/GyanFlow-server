@@ -1,5 +1,5 @@
 <!-- Base url
- http://localhost:4000/gyanflow/user/deleteUser/:email
+ http://localhost:4000/gyanflow/user/all-instructors
 
  USER Api End-Points
 
