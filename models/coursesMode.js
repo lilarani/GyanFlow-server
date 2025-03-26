@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-  const courseSchema = new mongoose.Schema({
+const courseSchema = new mongoose.Schema(
+  {
     title: String,
     shortDescription: String,
     description: String,
-    instructors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
+    instructors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     totalDuration: Number,
     enrollCount: Number,
@@ -18,10 +19,11 @@ import mongoose from "mongoose";
     status: {
       type: String,
       enum: ['active', 'inactive', 'draft'],
-      default: 'draft'
-    }
+      default: 'draft',
+    },
+  },
+  { timestamps: true }
+);
 
-}, { timestamps: true });
-
-const Course = mongoose.model("Course", courseSchema);
+const Course = mongoose.model('Course', courseSchema);
 export default Course;
