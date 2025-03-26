@@ -19,7 +19,7 @@ let userRegister = async (req, res) => {
       email,
       phone,
       password: encriptade,
-      role ,
+      role,
       picture,
       bio,
     });
@@ -28,6 +28,8 @@ let userRegister = async (req, res) => {
     const token = getToken(email);
     res.cookie('token', token, {
       httpOnly: true,
+      secure: true,
+      sameSite: 'None'
     });
 
     res.status(200).send({
@@ -61,6 +63,8 @@ const loginUser = async (req, res) => {
     const token = getToken(email);
     res.cookie('token', token, {
       httpOnly: true,
+      secure: true,
+      sameSite: 'None'
     });
     console.log('login token ', token);
     res.status(200).send({
@@ -97,6 +101,8 @@ let userRole = async (req, res) => {
     const token = getToken(email);
     res.cookie('token', token, {
       httpOnly: true,
+      secure: true,
+      sameSite: 'None'
     });
 
     console.log('login token ', token);
@@ -117,6 +123,8 @@ let userRole = async (req, res) => {
 let logoutUser = async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
+    secure: true,
+    sameSite: 'None'
   });
   res.status(200).send('Logged out successfully');
 };
