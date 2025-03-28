@@ -3,8 +3,14 @@ import jwt from 'jsonwebtoken';
 import User from './../models/userModel.js';
 
 let verifyToken = (req, res, next) => {
-  console.log('hello, my token', req.cookies.token);
-  let token = req.cookies.token;
+  const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header is missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  console.log('hello dear verfytoken line no 13 ', token )
   // jodi token na take
   if (!token) {
     return res.status(404).send({

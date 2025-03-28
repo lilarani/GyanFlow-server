@@ -1,16 +1,17 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import getToken from '../utils/tokenGenaratuon.js';
+import dotenv from 'dotenv';
 
+dotenv.config()
 let userRegister = async (req, res) => {
   try {
-    console.log(req.body);
-    let { name, email, phone, password, role, picture, bio } = req.body;
+    let { name, email, phone,role , password, picture, bio } = req.body;
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).send({
         success: false,
-        message: 'user already exists',
+        message: 'User already exists',
       });
     }
     let encriptade = await bcrypt.hash(password, 10);
@@ -26,24 +27,27 @@ let userRegister = async (req, res) => {
     await myUser.save();
 
     const token = getToken(email);
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None'
-    });
+
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    //   domain: ".gyanflow-ca428.web.app"
+    // });
 
     res.status(200).send({
       tokenCapture: true,
       success: true,
       data: {
+        token,
         name,
         email,
         phone,
-        role,
+        role ,
       },
     });
   } catch (e) {
-    res.status(200).send({
+    res.status(500).send({
       success: false,
       message: e.message,
     });
@@ -57,20 +61,24 @@ const loginUser = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(404).send({
         success: false,
-        message: 'incorrect information',
+        message: 'Incorrect information',
       });
     }
     const token = getToken(email);
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None'
-    });
-    console.log('login token ', token);
+
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    //   domain: ".gyanflow-ca428.web.app"
+    // });
+    console.log('login token', token);
+
     res.status(200).send({
       tokenCapture: true,
       success: true,
       data: {
+        token ,
         name: user.name,
         email: user.email,
         phone: user.phone,
@@ -78,9 +86,9 @@ const loginUser = async (req, res) => {
       },
     });
   } catch (e) {
-    res.status(404).send({
+    res.status(500).send({
       success: false,
-      message: "user can't login",
+      message: "User can't login",
     });
   }
 };
@@ -99,16 +107,18 @@ let userRole = async (req, res) => {
     }
 
     const token = getToken(email);
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None'
-    });
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    //   domain: ".gyanflow-ca428.web.app"
+    // });
 
     console.log('login token ', token);
     res.status(200).send({
       tokenCapture: true,
       success: true,
+      token ,
       data: user,
     });
   } catch (e) {
@@ -124,7 +134,8 @@ let logoutUser = async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
     secure: true,
-    sameSite: 'None'
+    sameSite: 'none',
+    domain: ".gyanflow-ca428.web.app"
   });
   res.status(200).send('Logged out successfully');
 };
