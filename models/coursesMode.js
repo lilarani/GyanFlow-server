@@ -5,7 +5,7 @@ import mongoose from "mongoose";
     shortDescription: String,
     description: String,
     instructors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
-    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    categoryId: String,
     totalDuration: Number,
     enrollCount: Number,
     seatLeft: Number,

@@ -7,7 +7,7 @@ let addCourse = async (req, res) => {
       shortDescription,
       description,
       instructors,
-      categoryId,
+      category,
       totalDuration,
       enrollCount,
       seatLeft,
@@ -27,7 +27,7 @@ let addCourse = async (req, res) => {
       shortDescription,
       description,
       instructors,
-      categoryId,
+      category,
       totalDuration,
       enrollCount,
       seatLeft,
@@ -38,7 +38,7 @@ let addCourse = async (req, res) => {
       studyPlan,
       totalLectures,
       rating,
-      status,
+      status
     });
 
     await newCourse.save();
@@ -70,4 +70,19 @@ let getAllPost = async (req, res) => {
   }
 };
 
-export { addCourse, getAllPost };
+const courseForInstructor = async (req, res) => {
+  try {
+    let instructorId = req.params.id;
+    let result = await Course.find({ instructors: instructorId });
+
+    if (!result.length) {
+      return res.status(404).json({ message: "No courses found for this instructor." });
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export { addCourse, getAllPost, courseForInstructor };
