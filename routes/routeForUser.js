@@ -26,7 +26,7 @@ router.get('/users', verifyToken, verifyAdmin, ourAllUsers);
 
 router.get('/role/:email', userRole);
 
-router.get('/all-instructors' , getInstructors)
+router.get('/all-instructors' , verifyToken , verifyAdmin, getInstructors)
 
 router.delete('/deleteUser/:email', deleteUser);
 
