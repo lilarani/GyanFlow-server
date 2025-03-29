@@ -177,7 +177,7 @@ let deleteUser = async (req, res) => {
 
 let getInstructors = async (req, res) => {
   try {
-    let instructors = await User.find({ role: 'instructor' }).select('name _id picture role');
+    let instructors = await User.find({ role: 'instructor' }).select('name _id email picture role');
     res.status(200).send(instructors);
   } catch (error) {
     res.status(404).send({ message: "Instructors not found ", error });
