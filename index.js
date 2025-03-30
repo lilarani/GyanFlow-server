@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import connectMongoDB from './config.js';
 import userRouter from './routes/routeForUser.js';
+import instructorActions from './routes/routeForInstructor.js';
 import courseRouter from './routes/routeForCours.js';
 import cookieParser from 'cookie-parser';
 import Course from './models/coursesMode.js';
@@ -19,6 +20,7 @@ connectMongoDB();
 
 app.use('/gyanflow/user', userRouter);
 app.use('/gyanflow/cours', courseRouter);
+app.use('/gyanflow/instructor', instructorActions );
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
