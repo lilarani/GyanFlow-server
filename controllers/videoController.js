@@ -28,8 +28,6 @@ let addVideo = async (req, res) => {
     }
 };
 
-let allVideo = async (req, res) => {
 
-}
 
 export { addVideo }
