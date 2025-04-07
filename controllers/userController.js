@@ -2,11 +2,12 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import getToken from '../utils/tokenGenaratuon.js';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
-dotenv.config()
+dotenv.config();
 let userRegister = async (req, res) => {
   try {
-    let { name, email, phone,role , password, picture, bio } = req.body;
+    let { name, email, phone, role, password, picture, bio } = req.body;
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).send({
@@ -43,7 +44,7 @@ let userRegister = async (req, res) => {
         name,
         email,
         phone,
-        role ,
+        role,
       },
     });
   } catch (e) {
@@ -78,7 +79,7 @@ const loginUser = async (req, res) => {
       tokenCapture: true,
       success: true,
       data: {
-        token ,
+        token,
         name: user.name,
         email: user.email,
         phone: user.phone,
@@ -118,7 +119,7 @@ let userRole = async (req, res) => {
     res.status(200).send({
       tokenCapture: true,
       success: true,
-      token ,
+      token,
       data: user,
     });
   } catch (e) {
@@ -135,7 +136,7 @@ let logoutUser = async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: 'none',
-    domain: ".gyanflow-ca428.web.app"
+    domain: '.gyanflow-ca428.web.app',
   });
   res.status(200).send('Logged out successfully');
 };
@@ -177,13 +178,31 @@ let deleteUser = async (req, res) => {
 
 let getInstructors = async (req, res) => {
   try {
-    let instructors = await User.find({ role: 'instructor' }).select('name _id email picture role');
+    let instructors = await User.find({ role: 'instructor' }).select(
+      'name _id email picture role'
+    );
     res.status(200).send(instructors);
   } catch (error) {
-    res.status(404).send({ message: "Instructors not found ", error });
+    res.status(404).send({ message: 'Instructors not found ', error });
   }
-}
+};
 
+// update user info
+let updateUsersInfo = async (req, res) => {
+  try {
+    let userId = req.params.id.trim();
+    console.log(userId);
+    let info = req.body;
+    console.log(info);
+    let updateUser = await User.findByIdAndUpdate(userId, info, { new: true });
+    res.status(200).send({
+      success: true,
+      data: updateUser,
+    });
+  } catch (error) {
+    res.status(403).send({ message: error.message, success: false });
+  }
+};
 
 export {
   userRegister,
@@ -192,5 +211,6 @@ export {
   ourAllUsers,
   userRole,
   deleteUser,
-  getInstructors
+  getInstructors,
+  updateUsersInfo,
 };
