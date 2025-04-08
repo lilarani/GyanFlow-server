@@ -158,10 +158,10 @@ let ourAllUsers = async (req, res) => {
   }
 };
 
+// delete user
 let deleteUser = async (req, res) => {
   try {
     let userEmail = req.params.email;
-    console.log(userEmail, 'delete user');
     let query = { email: userEmail };
     let result = await User.deleteOne(query);
     res.status(200).send({
@@ -191,9 +191,7 @@ let getInstructors = async (req, res) => {
 let updateUsersInfo = async (req, res) => {
   try {
     let userId = req.params.id.trim();
-    console.log(userId);
     let info = req.body;
-    console.log(info);
     let updateUser = await User.findByIdAndUpdate(userId, info, { new: true });
     res.status(200).send({
       success: true,
