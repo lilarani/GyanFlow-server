@@ -57,7 +57,8 @@ let addCourse = async (req, res) => {
 
 let getAllPost = async (req, res) => {
   try {
-    let result = await Course.find({});
+    let result = await Course.find({}).populate('instructors');
+    console.log(result);
     res.status(200).send({
       success: true,
       data: result,
@@ -106,4 +107,35 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-export { addCourse, getAllPost, courseForInstructor, deleteCourse };
+// Features course get api
+const featuresCourse = async (req, res) => {
+  try {
+    const upcomingCourse = await Course.find({ status: 'Upcoming' });
+    res.status(200).send({
+      success: true,
+      data: upcomingCourse,
+    });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
+};
+
+// Get course details by ID
+const featuresCourseDetails = async (req, res) => {
+  try {
+    const courseDetails = req.params.id;
+    const course = await Course.findById(courseDetails);
+    res.status(200).send({ success: true, data: course });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
+};
+
+export {
+  addCourse,
+  getAllPost,
+  courseForInstructor,
+  deleteCourse,
+  featuresCourse,
+  featuresCourseDetails,
+};
