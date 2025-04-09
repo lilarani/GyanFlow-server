@@ -7,6 +7,6 @@ let enrolleSchema = new mongoose.Schema({
 
 })
 
-let Enrollement = mongoose.Model("Enrollement" , enrolleSchema)
+let Enrollement = mongoose.model("Enrollement" , enrolleSchema)
 
 export default Enrollement ;
