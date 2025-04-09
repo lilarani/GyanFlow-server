@@ -7,7 +7,6 @@ import User from "../models/userModel.js";
  const createQuize= async(req,res)=>{
     try{
         const userAccess = await User.findById(req.params.instructorId)
-
         if (userAccess.role !=="instructor"){
            return  validationError(res, 400,"Only instructor can add quiz",)
         }    
@@ -21,6 +20,7 @@ import User from "../models/userModel.js";
        return successResponse(res, 201,"quiz create successfull", quiz)
 
     }catch(err){
+        console.log(err)
       return  errorResponse(res,500, "internal server Error", err);
       
     }
@@ -38,7 +38,6 @@ import User from "../models/userModel.js";
 
 //get quiz for specefic moduleId
 const getAllQuizForSpeceficModule = async (req, res) => {
-
     const moduleId= req.params.moduleId;
     try {
         const quiz = await Quiz.find({moduleId}).sort({ createdAt: -1 });
