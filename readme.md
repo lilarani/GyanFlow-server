@@ -26,7 +26,7 @@ instructor course = /course-for-instructor/:id
 
 instructor actions api end points
 http://localhost:4000/gyanflow/instructor
-67e81d8693f27df0a5ae894f
+
 add module = /gyanflow/instructor/add-module
 add video  = /gyanflow/instructor/add-video
 specific module = /gyanflow/instructor/all-videos/:id
