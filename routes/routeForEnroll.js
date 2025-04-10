@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.post('/init', initPayment);
-router.post('/success/:tran_id', paymentSuccess);
+router.post('/success-payment', paymentSuccess);
 
 export default router;

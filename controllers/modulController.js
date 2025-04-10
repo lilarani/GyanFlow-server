@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const addModul = async (req, res) => {
     try {
         let moduleInfo = req.body;
+        console.log("information is  =" , moduleInfo)
         let newModule = new UploadModul({
             ...moduleInfo
         });
