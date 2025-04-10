@@ -9,9 +9,8 @@ import cookieParser from 'cookie-parser';
 import User from './models/userModel.js';
 import Course from './models/coursesMode.js';
 import Enrollement from './models/enroleModel.js';
-
-
-import quizRoute from "./routes/quizRoute.js"
+import quizRoute from './routes/quizRoute.js';
+import enrollRouter from './routes/routeForEnroll.js';
 const app = express();
 
 const port = process.env.PORT || 4000;
@@ -25,12 +24,6 @@ app.use('/gyanflow/user', userRouter);
 app.use('/gyanflow/cours', courseRouter);
 app.use('/gyanflow/quiz', quizRoute);
 app.use('/gyanflow/instructor', instructorActions);
-
-
-
-
-
-
-
+app.use('/gyanflow/ssl-payment', enrollRouter);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
