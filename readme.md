@@ -8,12 +8,9 @@
     /gyanflow/user/googleLogin
     /gyanflow/user/logout
     /gyanflow/user/users
-<<<<<<< HEAD
      http://localhost:4000/gyanflow/user/deleteUser/:email'
-=======
     /gyanflow/user//all-instructors
     /gyanflow/user/deleteUser/:email'
->>>>>>> a5d17fedb0647863002cc5f076253cd5cf8b2394
 
  course api end-points
 

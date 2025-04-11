@@ -25,7 +25,7 @@ let userRegister = async (req, res) => {
       picture,
       bio,
     });
-    
+
     await myUser.save();
 
     const token = getToken(email);
@@ -142,6 +142,35 @@ let logoutUser = async (req, res) => {
   res.status(200).send('Logged out successfully');
 };
 
+let forgotPassword = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: " No user found with this email.",
+      });
+    }
+    // console.log('old user ' , user )
+
+    let encryptedPassword = await bcrypt.hash(password, 10);
+
+    user.password = encryptedPassword;
+    await user.save();
+    // console.log('new user ' ,user)
+    res.status(200).send({
+      success: true,
+      message: " Password updated successfully.",
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: " Something went wrong.",
+    });
+  }
+};
+
 let ourAllUsers = async (req, res) => {
   try {
     let users = await User.find({});
@@ -210,6 +239,7 @@ export {
   ourAllUsers,
   userRole,
   deleteUser,
+  forgotPassword,
   getInstructors,
   updateUsersInfo,
 };
