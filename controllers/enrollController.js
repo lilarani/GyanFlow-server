@@ -106,4 +106,12 @@ const paymentSuccess = async (req, res) => {
   }
 };
 
-export { initPayment, paymentSuccess };
+// student courses
+const studentCourses = async (req, res) => {
+  const { studentId } = req.body;
+  console.log(studentId, 'studentid ');
+  const enrollments = await Payment.find({ studentId }).populate('courseId');
+  console.log(enrollments, 'enrollment');
+};
+
+export { initPayment, paymentSuccess, studentCourses };

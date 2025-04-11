@@ -8,6 +8,7 @@ import {
   deleteUser,
   getInstructors,
   updateUsersInfo,
+  forgotPassword,
 } from '../controllers/userController.js';
 import setTooken from './../utils/setToken.js';
 import verifyToken from './../middlewares/verifytoken.js';
@@ -22,6 +23,8 @@ router.post('/login', loginUser);
 router.post('/googleLogin', setTooken);
 
 router.get('/logout', logoutUser);
+
+router.post('/forgot-pass', forgotPassword )
 
 router.get('/users', verifyToken, verifyAdmin, ourAllUsers);
 

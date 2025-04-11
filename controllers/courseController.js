@@ -58,7 +58,7 @@ let addCourse = async (req, res) => {
 
 let getAllPost = async (req, res) => {
   try {
-    let result = await Course.find({}).populate('instructors');
+    let result = await Course.find({});
     console.log(result);
     res.status(200).send({
       success: true,
