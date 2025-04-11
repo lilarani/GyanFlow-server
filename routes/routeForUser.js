@@ -7,6 +7,7 @@ import {
   userRole,
   deleteUser,
   getInstructors,
+  updateUsersInfo,
 } from '../controllers/userController.js';
 import setTooken from './../utils/setToken.js';
 import verifyToken from './../middlewares/verifytoken.js';
@@ -26,8 +27,10 @@ router.get('/users', verifyToken, verifyAdmin, ourAllUsers);
 
 router.get('/role/:email', userRole);
 
-router.get('/all-instructors' , verifyToken , verifyAdmin, getInstructors)
+router.get('/all-instructors', verifyToken, verifyAdmin, getInstructors);
 
 router.delete('/deleteUser/:email', deleteUser);
+
+router.put('/updateUserInfo/:id', updateUsersInfo);
 
 export default router;
