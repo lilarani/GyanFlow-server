@@ -99,7 +99,7 @@ const paymentSuccess = async (req, res) => {
     await successPaymentInfo.save();
 
     if (data.status === 'VALID') {
-      return res.redirect('http://localhost:5173/successedPayment');
+      return res.redirect('https://gyanflow-ca428.web.app/successedPayment');
     }
 
     console.log(isValidPayment, 'valid payment');
