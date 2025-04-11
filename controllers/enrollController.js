@@ -28,7 +28,7 @@ const initPayment = async (req, res) => {
     currency: 'BDT',
     tran_id: trxid, // use unique tran_id for each api call
     success_url:
-      'https://gyanflow-ca428.web.app/gyanflow/ssl-payment/success-payment',
+      'https://gyanflow-server.onrender.com/gyanflow/ssl-payment/success-payment',
 
     fail_url: ' https://gyanflow-ca428.web.app/fail',
     cancel_url: ' https://gyanflow-ca428.web.app/cancel',
