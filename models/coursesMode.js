@@ -12,6 +12,7 @@ const courseSchema = new mongoose.Schema(
     seatLeft: Number,
     batch: Number,
     price: Number,
+    project: Number,
     thumbnail: String,
     studyPlan: [String],
     totalLectures: Number,
