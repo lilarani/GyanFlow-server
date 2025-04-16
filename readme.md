@@ -30,3 +30,5 @@ specific module = /gyanflow/instructor/all-videos/:id
 all module for specific course = /gyanflow/instructor/all-modules/:id
 
  -->
+
+http://localhost:4000/gyanflow/ssl-payment/student-courses/:id
