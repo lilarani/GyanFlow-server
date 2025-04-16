@@ -27,10 +27,12 @@ const initPayment = async (req, res) => {
     total_amount: price,
     currency: 'BDT',
     tran_id: trxid, // use unique tran_id for each api call
-    success_url: 'http://localhost:4000/gyanflow/ssl-payment/success-payment',
-    fail_url: 'http://localhost:5173/fail',
-    cancel_url: 'http://localhost:5173/cancel',
-    ipn_url: 'http://localhost:4000/ipn',
+    success_url:
+      'https://gyanflow-server.onrender.com/gyanflow/ssl-payment/success-payment',
+
+    fail_url: ' https://gyanflow-ca428.web.app/fail',
+    cancel_url: ' https://gyanflow-ca428.web.app/cancel',
+    ipn_url: 'https://gyanflow-server.onrender.com/ipn',
     shipping_method: 'Courier',
     product_name: courseInfo.title,
     product_category: 'Electronic',
@@ -97,7 +99,7 @@ const paymentSuccess = async (req, res) => {
     await successPaymentInfo.save();
 
     if (data.status === 'VALID') {
-      return res.redirect('http://localhost:5173/successedPayment');
+      return res.redirect('https://gyanflow-ca428.web.app/successedPayment');
     }
 
     console.log(isValidPayment, 'valid payment');
@@ -109,6 +111,7 @@ const paymentSuccess = async (req, res) => {
 // student courses
 const studentCourses = async (req, res) => {
   const { studentId } = req.body;
+  j;
   console.log(studentId, 'studentid ');
   const enrollments = await Payment.find({ studentId }).populate('courseId');
   console.log(enrollments, 'enrollment');
