@@ -1,4 +1,4 @@
-import Announcement from "../models/AnnouncementModel";
+import Announcement from "../models/AnnouncementModel.js";
 
 let addAnnouncement = async (req, res) => {
   try {

@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import connectMongoDB from './config.js';
 import userRouter from './routes/routeForUser.js';
+import routeForAnnouncement from './routes/routeForAnnouncement.js'
 import instructorActions from './routes/routeForInstructor.js';
 import courseRouter from './routes/routeForCours.js';
 import cookieParser from 'cookie-parser';
@@ -11,6 +12,7 @@ import Course from './models/coursesMode.js';
 import Enrollement from './models/enroleModel.js';
 import quizRoute from './routes/quizRoute.js';
 import enrollRouter from './routes/routeForEnroll.js';
+import { addAnnouncement } from './controllers/announcementController.js';
 const app = express();
 
 const port = process.env.PORT || 4000;
@@ -26,5 +28,5 @@ app.use('/gyanflow/cours', courseRouter);
 app.use('/gyanflow/quiz', quizRoute);
 app.use('/gyanflow/instructor', instructorActions);
 app.use('/gyanflow/ssl-payment', enrollRouter);
-
+app.use('/gyanflow/annoucement',routeForAnnouncement);
 app.listen(port, () => console.log(`Server running on port ${port}`));
