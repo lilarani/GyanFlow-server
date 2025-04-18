@@ -110,11 +110,27 @@ const paymentSuccess = async (req, res) => {
 
 // student courses
 const studentCourses = async (req, res) => {
-  const { studentId } = req.body;
-  j;
-  console.log(studentId, 'studentid ');
-  const enrollments = await Payment.find({ studentId }).populate('courseId');
-  console.log(enrollments, 'enrollment');
+  try {
+    const { id } = req.params;
+    console.log(id, 'studentid ');
+    const enrollments = await Payment.find({ studentId: id })
+      .populate('courseId')
+      .populate('studentId');
+    res.status(200).send({ success: true, data: enrollments });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
 };
 
-export { initPayment, paymentSuccess, studentCourses };
+// all course
+const allEnrolledCourse = async (req, res) => {
+  try {
+    const allCourse = req.body;
+    const result = await Payment.find(allCourse);
+    res.status(200).send({ success: true, data: result });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
+};
+
+export { initPayment, paymentSuccess, studentCourses, allEnrolledCourse };
