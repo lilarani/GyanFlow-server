@@ -15,12 +15,10 @@ const initPayment = async (req, res) => {
 
   const studentInfo = await User.findById(studID);
   const courseInfo = await Course.findById(courseID);
-  // console.log('course info', courseInfo);
-  // console.log('student info', studentInfo);
 
   const trxid = new mongoose.Types.ObjectId().toString();
   payment.transactionId = trxid;
-  // console.log(payment, 'payment ');
+
   const initiate = {
     store_id: 'gyanf67f68f83c6020',
     store_passwd: 'gyanf67f68f83c6020@ssl',
@@ -68,11 +66,10 @@ const initPayment = async (req, res) => {
     },
   });
 
-  // console.log(iniResponse);
   // const sendData = await Payment.insertOne(payment);
 
   const gatewayUrl = iniResponse?.data?.GatewayPageURL;
-  // console.log(gatewayUrl, 'gateway url');
+
   res.status(200).send({ data: gatewayUrl, success: true });
 };
 
@@ -80,7 +77,6 @@ const paymentSuccess = async (req, res) => {
   try {
     // success payment data
     const paySuccess = req.body;
-    console.log(paySuccess, 'payment success info');
 
     // validation payment
     const { data } = await axios.get(
@@ -96,13 +92,17 @@ const paymentSuccess = async (req, res) => {
       courseId: req.body.value_b,
     });
 
+    // let course = await Course.findOne({ _id: req.body.value_b });
+    // console.log('nothing............');
+    // if (course) {
+    //   course.enrolledStudents.push(req.body.value_a);
+    // }
+    // await course.save();
     await successPaymentInfo.save();
 
     if (data.status === 'VALID') {
       return res.redirect('https://gyanflow-ca428.web.app/successedPayment');
     }
-
-    console.log(isValidPayment, 'valid payment');
   } catch (err) {
     res.status(404).send({ message: 'faild payment' });
   }
@@ -112,7 +112,7 @@ const paymentSuccess = async (req, res) => {
 const studentCourses = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id, 'studentid ');
+
     const enrollments = await Payment.find({ studentId: id })
       .populate('courseId')
       .populate('studentId');
@@ -125,8 +125,8 @@ const studentCourses = async (req, res) => {
 // all course
 const allEnrolledCourse = async (req, res) => {
   try {
-    const allCourse = req.body;
-    const result = await Payment.find(allCourse);
+  
+    const result = await Payment.find()
     res.status(200).send({ success: true, data: result });
   } catch (err) {
     res.status(404).send({ success: false, message: err.message });

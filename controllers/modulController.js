@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const addModul = async (req, res) => {
   try {
     let moduleInfo = req.body;
-    console.log('information is  =', moduleInfo);
+
     let newModule = new UploadModul({
       ...moduleInfo,
     });
@@ -23,7 +23,7 @@ const addModul = async (req, res) => {
 
 let allModules = async (req, res) => {
   let courseId = req.params.id;
-  // console.log(courseId)
+
   try {
     let result = await UploadModul.find({ courseId }).populate('videos');
     res.status(200).send({
@@ -41,7 +41,6 @@ let allModules = async (req, res) => {
 let allVideos = async (req, res) => {
   try {
     let modulId = req.params.id;
-    console.log('Fetching modules for course:', modulId);
 
     if (!mongoose.Types.ObjectId.isValid(modulId)) {
       return res.status(400).send({

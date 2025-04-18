@@ -74,7 +74,6 @@ const loginUser = async (req, res) => {
     //   sameSite: "none",
     //   domain: ".gyanflow-ca428.web.app"
     // });
-    console.log('login token', token);
 
     res.status(200).send({
       tokenCapture: true,
@@ -98,7 +97,6 @@ const loginUser = async (req, res) => {
 let userRole = async (req, res) => {
   try {
     let email = req.params.email;
-    console.log(email);
 
     let user = await User.findOne({ email });
     if (!user) {
@@ -116,7 +114,6 @@ let userRole = async (req, res) => {
     //   domain: ".gyanflow-ca428.web.app"
     // });
 
-    console.log('login token ', token);
     res.status(200).send({
       tokenCapture: true,
       success: true,
@@ -149,24 +146,23 @@ let forgotPassword = async (req, res) => {
     if (!user) {
       return res.status(404).send({
         success: false,
-        message: " No user found with this email.",
+        message: ' No user found with this email.',
       });
     }
-    // console.log('old user ' , user )
 
     let encryptedPassword = await bcrypt.hash(password, 10);
 
     user.password = encryptedPassword;
     await user.save();
-    // console.log('new user ' ,user)
+
     res.status(200).send({
       success: true,
-      message: " Password updated successfully.",
+      message: ' Password updated successfully.',
     });
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: " Something went wrong.",
+      message: ' Something went wrong.',
     });
   }
 };
@@ -180,7 +176,6 @@ let ourAllUsers = async (req, res) => {
       data: users,
     });
   } catch (e) {
-    console.log(e);
     res.status(404).send({
       success: false,
       message: 'users not found',

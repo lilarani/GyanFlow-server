@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 const courseSchema = new mongoose.Schema(
@@ -7,6 +6,7 @@ const courseSchema = new mongoose.Schema(
     shortDescription: String,
     description: String,
     instructors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    enrolledStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     categoryId: String,
     totalDuration: Number,
     enrollCount: Number,
