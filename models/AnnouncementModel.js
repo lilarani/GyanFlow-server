@@ -4,7 +4,7 @@ const announcementSchema = new mongoose.Schema({
   title: String,
   description: String,
   category: String,
-  date: Date,
+  date: String,
   link: String,
 });
 
