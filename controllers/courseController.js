@@ -1,4 +1,4 @@
-import Course from "./../models/coursesMode.js";
+import Course from './../models/coursesMode.js';
 
 let addCourse = async (req, res) => {
   try {
@@ -20,8 +20,7 @@ let addCourse = async (req, res) => {
       rating,
       status,
     } = req.body;
-    // console.log(req.body);
-    // console.log('info comming');
+
     let newCourse = new Course({
       title,
       shortDescription,
@@ -42,7 +41,7 @@ let addCourse = async (req, res) => {
     });
 
     await newCourse.save();
-    console.log("course Add Done");
+
     res.status(200).send({
       success: true,
       data: req.body,
@@ -58,7 +57,7 @@ let addCourse = async (req, res) => {
 let getAllPost = async (req, res) => {
   try {
     let result = await Course.find({});
-    console.log(result);
+
     res.status(200).send({
       success: true,
       data: result,
@@ -66,7 +65,7 @@ let getAllPost = async (req, res) => {
   } catch (e) {
     res.status(404).send({
       success: false,
-      data: "no data found",
+      data: 'no data found',
     });
   }
 };
@@ -79,7 +78,7 @@ const courseForInstructor = async (req, res) => {
     if (!result.length) {
       return res
         .status(404)
-        .json({ message: "No courses found for this instructor." });
+        .json({ message: 'No courses found for this instructor.' });
     }
 
     res.status(200).json(result);
@@ -95,11 +94,11 @@ const deleteCourse = async (req, res) => {
     let deletedCourse = await Course.findByIdAndDelete(courseId);
 
     if (!deletedCourse) {
-      return res.status(404).json({ message: "Course not found" });
+      return res.status(404).json({ message: 'Course not found' });
     }
 
     res.status(200).json({
-      message: "Course deleted successfully",
+      message: 'Course deleted successfully',
       course: deletedCourse,
     });
   } catch (err) {
@@ -110,7 +109,7 @@ const deleteCourse = async (req, res) => {
 // Features course get api
 const featuresCourse = async (req, res) => {
   try {
-    const upcomingCourse = await Course.find({ status: "Upcoming" });
+    const upcomingCourse = await Course.find({ status: 'Upcoming' });
     res.status(200).send({
       success: true,
       data: upcomingCourse,

@@ -1,20 +1,14 @@
-
 let verifyTecher = (req, res, next) => {
-    let user = req.user
-    console.log("my techer = ", user);
+  let user = req.user;
 
-    if (user?.role !== 'Teacher') {
-        return res.status(404).send({
-            success: false,
-            message: " Only teacher access this data "
-        });
-    }
+  if (user?.role !== 'Teacher') {
+    return res.status(404).send({
+      success: false,
+      message: ' Only teacher access this data ',
+    });
+  }
 
-    next()
-}
+  next();
+};
 
-export default verifyTecher
-
-
-
-
+export default verifyTecher;
