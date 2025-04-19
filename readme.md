@@ -13,7 +13,7 @@
      https://gyanflow-server.onrender.com/gyanflow/user/deleteUser/:email'
 =======
 =======
-     http://localhost:4000/gyanflow/user/deleteUser/:email'
+     http://localhost:4000/gyanflow/all-stats/stats'
 >>>>>>> 5a0c4cba817851003774ff620c590b2f032f539b
     /gyanflow/user//all-instructors
     /gyanflow/user/deleteUser/:email'

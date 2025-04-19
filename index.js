@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectMongoDB from './config.js';
 import userRouter from './routes/routeForUser.js';
 import routeForAnnouncement from './routes/routeForAnnouncement.js'
+import statsRoute from './routes/statsRoute.js'
 import instructorActions from './routes/routeForInstructor.js';
 import courseRouter from './routes/routeForCours.js';
 import cookieParser from 'cookie-parser';
@@ -29,4 +30,5 @@ app.use('/gyanflow/quiz', quizRoute);
 app.use('/gyanflow/instructor', instructorActions);
 app.use('/gyanflow/ssl-payment', enrollRouter);
 app.use('/gyanflow/annoucement',routeForAnnouncement);
+app.use('/gyanflow/all-stats',statsRoute);
 app.listen(port, () => console.log(`Server running on port ${port}`));

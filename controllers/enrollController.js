@@ -77,6 +77,7 @@ const paymentSuccess = async (req, res) => {
   try {
     // success payment data
     const paySuccess = req.body;
+    console.log('pay success', paySuccess);
 
     // validation payment
     const { data } = await axios.get(
@@ -85,20 +86,31 @@ const paymentSuccess = async (req, res) => {
     if (data.status !== 'VALID') {
       return res.send({ message: 'Invalid payment' });
     }
+    console.log('payment pending');
 
     const successPaymentInfo = new Payment({
-      transactionId: req.body.tran_id,
-      studentId: req.body.value_a,
-      courseId: req.body.value_b,
+      transactionId: req?.body?.tran_id,
+      studentId: req?.body?.value_a,
+      courseId: req?.body?.value_b,
     });
-
+    let courseId = req?.body?.value_b;
+    console.log(courseId, 'courseId..........');
+    let enroll = await Course.findByIdAndUpdate(
+      courseId,
+      {
+        $push: { enrolledStudents: req?.body?.value_a },
+      },
+      { new: true }
+    );
+    console.log(enroll, 'enroll');
     // let course = await Course.findOne({ _id: req.body.value_b });
-    // console.log('nothing............');
+    console.log('nothing............');
     // if (course) {
     //   course.enrolledStudents.push(req.body.value_a);
     // }
     // await course.save();
-    await successPaymentInfo.save();
+    let paymentInfo = await successPaymentInfo.save();
+    console.log(paymentInfo, 'payment info....');
 
     if (data.status === 'VALID') {
       return res.redirect('https://gyanflow-ca428.web.app/successedPayment');
@@ -125,8 +137,7 @@ const studentCourses = async (req, res) => {
 // all course
 const allEnrolledCourse = async (req, res) => {
   try {
-  
-    const result = await Payment.find()
+    const result = await Payment.find();
     res.status(200).send({ success: true, data: result });
   } catch (err) {
     res.status(404).send({ success: false, message: err.message });
