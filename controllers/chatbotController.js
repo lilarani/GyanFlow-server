@@ -18,12 +18,10 @@ const chatBot = async (req, res) => {
 
     console.log(response);
 
-    res
-      .status(200)
-      .send({
-        success: true,
-        data: { geminiResponse: response.text, userPrompt: prompt },
-      });
+    res.status(200).send({
+      success: true,
+      data: { geminiResponse: response.text, userPrompt: prompt },
+    });
   } catch (error) {
     res.status(404).send({
       error: error.message,
