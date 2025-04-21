@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser';
 
 import connectMongoDB from './config.js';
 import userRouter from './routes/routeForUser.js';
+import routeForAnnouncement from './routes/routeForAnnouncement.js'
+import statsRoute from './routes/statsRoute.js'
 import instructorActions from './routes/routeForInstructor.js';
 import chatbotRouter from './routes/routerForChatbot.js';
 import routeForAnnouncement from './routes/routeForAnnouncement.js'
@@ -15,9 +17,13 @@ import statsRoute from './routes/statsRoute.js'
 import courseRouter from './routes/routeForCours.js';
 import quizRoute from './routes/quizRoute.js';
 import enrollRouter from './routes/routeForEnroll.js';
+
 import mongoose, { Mongoose } from 'mongoose';
 import Message from './models/messageModel.js';
 import User from './models/userModel.js';
+
+import { addAnnouncement } from './controllers/announcementController.js';
+
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -34,6 +40,7 @@ app.use('/gyanflow/cours', courseRouter);
 app.use('/gyanflow/quiz', quizRoute);
 app.use('/gyanflow/instructor', instructorActions);
 app.use('/gyanflow/ssl-payment', enrollRouter);
+
 app.use('/gyanflow/chatbot', chatbotRouter);
 app.use('/gyanflow/annoucement', routeForAnnouncement);
 app.use('/gyanflow/all-stats', statsRoute);
@@ -131,3 +138,8 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
+// app.use('/gyanflow/annoucement',routeForAnnouncement);
+// app.use('/gyanflow/all-stats',statsRoute);
+// app.listen(port, () => console.log(`Server running on port ${port}`));
+
