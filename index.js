@@ -8,6 +8,10 @@ import cookieParser from 'cookie-parser';
 import connectMongoDB from './config.js';
 import userRouter from './routes/routeForUser.js';
 import instructorActions from './routes/routeForInstructor.js';
+import chatbotRouter from './routes/routerForChatbot.js';
+import routeForAnnouncement from './routes/routeForAnnouncement.js'
+import statsRoute from './routes/statsRoute.js'
+
 import courseRouter from './routes/routeForCours.js';
 import quizRoute from './routes/quizRoute.js';
 import enrollRouter from './routes/routeForEnroll.js';
@@ -30,6 +34,9 @@ app.use('/gyanflow/cours', courseRouter);
 app.use('/gyanflow/quiz', quizRoute);
 app.use('/gyanflow/instructor', instructorActions);
 app.use('/gyanflow/ssl-payment', enrollRouter);
+app.use('/gyanflow/chatbot', chatbotRouter);
+app.use('/gyanflow/annoucement', routeForAnnouncement);
+app.use('/gyanflow/all-stats', statsRoute);
 
 const server = http.createServer(app);
 const io = new Server(server, {

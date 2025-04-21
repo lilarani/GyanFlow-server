@@ -20,8 +20,7 @@ let addCourse = async (req, res) => {
       rating,
       status,
     } = req.body;
-    console.log(req.body);
-    console.log('info comming');
+
     let newCourse = new Course({
       title,
       shortDescription,
@@ -40,10 +39,9 @@ let addCourse = async (req, res) => {
       rating,
       status,
     });
-    
 
     await newCourse.save();
-    console.log('course Add Done');
+
     res.status(200).send({
       success: true,
       data: req.body,
@@ -58,8 +56,7 @@ let addCourse = async (req, res) => {
 
 let getAllPost = async (req, res) => {
   try {
-    let result = await Course.find({}).populate('instructors');
-    console.log(result);
+    let result = await Course.find({});
     res.status(200).send({
       success: true,
       data: result,

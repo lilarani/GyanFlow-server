@@ -15,22 +15,22 @@ const initPayment = async (req, res) => {
 
   const studentInfo = await User.findById(studID);
   const courseInfo = await Course.findById(courseID);
-  // console.log('course info', courseInfo);
-  // console.log('student info', studentInfo);
 
   const trxid = new mongoose.Types.ObjectId().toString();
   payment.transactionId = trxid;
-  // console.log(payment, 'payment ');
+
   const initiate = {
     store_id: 'gyanf67f68f83c6020',
     store_passwd: 'gyanf67f68f83c6020@ssl',
     total_amount: price,
     currency: 'BDT',
     tran_id: trxid, // use unique tran_id for each api call
-    success_url: 'http://localhost:4000/gyanflow/ssl-payment/success-payment',
-    fail_url: 'http://localhost:5173/fail',
-    cancel_url: 'http://localhost:5173/cancel',
-    ipn_url: 'http://localhost:4000/ipn',
+    success_url:
+      'https://gyanflow-server.onrender.com/gyanflow/ssl-payment/success-payment',
+
+    fail_url: ' https://gyanflow-ca428.web.app/fail',
+    cancel_url: ' https://gyanflow-ca428.web.app/cancel',
+    ipn_url: 'https://gyanflow-server.onrender.com/ipn',
     shipping_method: 'Courier',
     product_name: courseInfo.title,
     product_category: 'Electronic',
@@ -66,11 +66,10 @@ const initPayment = async (req, res) => {
     },
   });
 
-  // console.log(iniResponse);
   // const sendData = await Payment.insertOne(payment);
 
   const gatewayUrl = iniResponse?.data?.GatewayPageURL;
-  // console.log(gatewayUrl, 'gateway url');
+
   res.status(200).send({ data: gatewayUrl, success: true });
 };
 
@@ -78,7 +77,7 @@ const paymentSuccess = async (req, res) => {
   try {
     // success payment data
     const paySuccess = req.body;
-    console.log(paySuccess, 'payment success info');
+    console.log('pay success', paySuccess);
 
     // validation payment
     const { data } = await axios.get(
@@ -87,20 +86,35 @@ const paymentSuccess = async (req, res) => {
     if (data.status !== 'VALID') {
       return res.send({ message: 'Invalid payment' });
     }
+    console.log('payment pending');
 
     const successPaymentInfo = new Payment({
-      transactionId: req.body.tran_id,
-      studentId: req.body.value_a,
-      courseId: req.body.value_b,
+      transactionId: req?.body?.tran_id,
+      studentId: req?.body?.value_a,
+      courseId: req?.body?.value_b,
     });
-
-    await successPaymentInfo.save();
+    let courseId = req?.body?.value_b;
+    console.log(courseId, 'courseId..........');
+    let enroll = await Course.findByIdAndUpdate(
+      courseId,
+      {
+        $push: { enrolledStudents: req?.body?.value_a },
+      },
+      { new: true }
+    );
+    console.log(enroll, 'enroll');
+    // let course = await Course.findOne({ _id: req.body.value_b });
+    console.log('nothing............');
+    // if (course) {
+    //   course.enrolledStudents.push(req.body.value_a);
+    // }
+    // await course.save();
+    let paymentInfo = await successPaymentInfo.save();
+    console.log(paymentInfo, 'payment info....');
 
     if (data.status === 'VALID') {
-      return res.redirect('http://localhost:5173/successedPayment');
+      return res.redirect('https://gyanflow-ca428.web.app/successedPayment');
     }
-
-    console.log(isValidPayment, 'valid payment');
   } catch (err) {
     res.status(404).send({ message: 'faild payment' });
   }
@@ -108,10 +122,26 @@ const paymentSuccess = async (req, res) => {
 
 // student courses
 const studentCourses = async (req, res) => {
-  const { studentId } = req.body;
-  console.log(studentId, 'studentid ');
-  const enrollments = await Payment.find({ studentId }).populate('courseId');
-  console.log(enrollments, 'enrollment');
+  try {
+    const { id } = req.params;
+
+    const enrollments = await Payment.find({ studentId: id })
+      .populate('courseId')
+      .populate('studentId');
+    res.status(200).send({ success: true, data: enrollments });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
 };
 
-export { initPayment, paymentSuccess, studentCourses };
+// all course
+const allEnrolledCourse = async (req, res) => {
+  try {
+    const result = await Payment.find();
+    res.status(200).send({ success: true, data: result });
+  } catch (err) {
+    res.status(404).send({ success: false, message: err.message });
+  }
+};
+
+export { initPayment, paymentSuccess, studentCourses, allEnrolledCourse };
