@@ -57,6 +57,7 @@ let addCourse = async (req, res) => {
 let getAllPost = async (req, res) => {
   try {
     let result = await Course.find({});
+    
     res.status(200).send({
       success: true,
       data: result,

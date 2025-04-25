@@ -27,4 +27,19 @@ let addAnnouncement = async (req, res) => {
   }
 };
 
-export { addAnnouncement };
+let getAllAnnouncement = async(req,res) =>{
+  try{
+    let result = await Announcement.find({});
+    res.status(200).send({
+      success: true,
+      data: result,
+    });
+  }catch(e){
+    res.status(404).send({
+      success: false,
+      data: 'no announcement found',
+    })
+  }
+};
+
+export { addAnnouncement,getAllAnnouncement  };
