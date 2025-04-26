@@ -6,6 +6,7 @@ const announcementSchema = new mongoose.Schema({
   category: String,
   date: String,
   link: String,
+  thumbnail: String,
 });
 
 const Announcement = mongoose.model("Annoncement", announcementSchema);
