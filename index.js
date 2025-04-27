@@ -23,6 +23,7 @@ import User from './models/userModel.js';
 import PostsRouter from './routes/routeForPosts.js';
 
 import { addAnnouncement } from './controllers/announcementController.js';
+import Announcement from './models/AnnouncementModel.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
