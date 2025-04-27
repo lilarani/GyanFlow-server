@@ -25,8 +25,7 @@ router.post('/googleLogin', setTooken);
 router.get('/logout', logoutUser);
 
 router.get('/users', verifyToken, ourAllUsers);
-router.post('/forgot-pass', forgotPassword )
-
+router.post('/forgot-pass', forgotPassword);
 
 router.get('/role/:email', userRole);
 
