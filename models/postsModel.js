@@ -4,6 +4,7 @@ const postsSchema = new mongoose.Schema({
   description: String,
   category: String,
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comments' }],
   content: String,
   postImage: String,
 });

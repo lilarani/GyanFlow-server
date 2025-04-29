@@ -14,7 +14,12 @@ const addPost = async (req, res) => {
 // get apis
 const allPosts = async (req, res) => {
   try {
-    const posts = await Posts.find({}).populate('userId');
+    const posts = await Posts.find({}).populate('userId').populate({
+      path: 'comments',
+      populate: [
+        { path: 'userInfo' }
+      ]
+    });
     res.status(201).send({ success: true, data: posts });
   } catch (err) {
     res.status(404).send({ success: false, message: err.message });
