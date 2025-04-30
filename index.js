@@ -20,6 +20,8 @@ import enrollRouter from './routes/routeForEnroll.js';
 import mongoose, { Mongoose } from 'mongoose';
 import Message from './models/messageModel.js';
 import User from './models/userModel.js';
+import PostsRouter from './routes/routeForPosts.js';
+import commentRouter from './routes/routeForComment.js';
 
 import { addAnnouncement } from './controllers/announcementController.js';
 import Announcement from './models/AnnouncementModel.js';
@@ -43,6 +45,8 @@ app.use('/gyanflow/ssl-payment', enrollRouter);
 app.use('/gyanflow/chatbot', chatbotRouter);
 app.use('/gyanflow/annoucement', routeForAnnouncement);
 app.use('/gyanflow/all-stats', statsRoute);
+app.use('/gyanflow/posts', PostsRouter);
+app.use('/gyanflow/comments', commentRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {
