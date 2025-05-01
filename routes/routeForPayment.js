@@ -5,6 +5,6 @@ import verifyToken from "../middlewares/verifytoken.js";
 import { getAllPayment } from "../controllers/paymentController.js";
 let router = express.Router();
 
-router.get("/all-payment", verifyToken, verifyAdmin, getAllPayment);
+router.get("/all-payment",  getAllPayment);
 
 export default router;
