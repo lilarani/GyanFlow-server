@@ -8,10 +8,11 @@ let courseStats = async (req, res) => {
     const totalCourse = await Course.countDocuments();
 
     const totalStudents = await User.countDocuments({ role: "student" });
+    const totalInstructors = await User.countDocuments({ role: "instructor" });
 
     res.status(200).send({
       success: true,
-      data: { totalCourse, totalStudents },
+      data: { totalCourse, totalStudents, totalInstructors },
     });
   } catch (e) {
     res.status(404).send({
